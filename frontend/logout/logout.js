@@ -1,4 +1,4 @@
-/ logout.js
+// logout.js
 document.addEventListener("DOMContentLoaded", function () {
     // Tìm phần tử nút logout
     const logoutButton = document.querySelector(".logout");
