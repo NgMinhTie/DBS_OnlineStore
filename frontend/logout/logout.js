@@ -10,8 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // Ngăn chặn hành vi mặc định nếu cần
             event.preventDefault();
 
-            // Chuyển hướng về trang my_web.html
-            window.location.href = "my_web.html";
+            // Chuyển hướng về trang login.html
+            window.location.href = "login.html";
         });
+    } else {
+        console.error("Logout button not found");
     }
 });

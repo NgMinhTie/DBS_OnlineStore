@@ -18,7 +18,9 @@ body::before {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: url("C:/Users/Admin/DatabaseAss2/DBS_Ass2/image.jpg");
+    /* Ensure the relative path is correct 
+    background: url("../login/image.jpg");*/
+    background: url("../login/hinh-nen-may-tinh-11.jpg");
     background-position: center;
     background-size: cover;
     z-index: -1;
