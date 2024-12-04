@@ -1,0 +1,209 @@
+/*the following html and body rule sets are required only if using a % width or height*/
+/*html {
+width: 100%;
+height: 100%;
+}*/
+
+body {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 20px 0 20px;
+    text-align: center;
+    background: white;
+  }
+  .scrollingtable-container {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px; /* Padding để giữ khoảng cách */
+    text-align: center;
+    background: white;
+    display: flex;
+    flex-direction: row; /* Đặt layout theo hàng ngang */
+    justify-content: flex-end; /* Đẩy toàn bộ nội dung sang phải */
+    align-items: center; /* Căn giữa theo chiều dọc */
+  }
+  
+  .scrollingtable1, .scrollingtable2, .scrollingtable3, .scrollingtable {
+      display: none;
+  }
+  
+  .scrollingtable-container {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    align-items: center; /* Center vertically */
+    justify-content: flex-end; /* Align tables to the right */
+    width: 100%;
+    margin-top: 20px;
+    padding-right: 20px; /* Add padding to the right */
+  }
+  
+  .scrollingtable, .scrollingtable1, .scrollingtable2, .scrollingtable3 {
+    box-sizing: border-box;
+    display: block; /* Change to block layout */
+    overflow: hidden;
+    width: 67.5%; /* Increase width by 1.5 times */
+    min-width: 0;
+    height: 282px; /* Increase height by 1.5 times */
+    min-height: 0;
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 22.5px; /* Increase font size by 1.5 times */
+    line-height: 30px; /* Increase line height by 1.5 times */
+    padding: 30px 0; /* Increase padding by 1.5 times */
+    text-align: left;
+    margin: 15px 0; /* Increase margin for spacing between tables */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .scrollingtable *, .scrollingtable1 *, .scrollingtable2 *, .scrollingtable3 * {box-sizing: border-box;}
+  .scrollingtable > div, .scrollingtable1 > div, .scrollingtable2 > div, .scrollingtable3 > div {
+    position: relative;
+    border-top: 1px solid black;
+    height: 100%;
+    padding-top: 30px; /* Increase padding by 1.5 times */
+  }
+  .scrollingtable > div:before, .scrollingtable1 > div:before, .scrollingtable2 > div:before, .scrollingtable3 > div:before {
+    top: 0;
+    background: cornflowerblue; /*header row background color*/
+  }
+  .scrollingtable > div:before,
+  .scrollingtable > div > div:after,
+  .scrollingtable1 > div:before,
+  .scrollingtable1 > div > div:after,
+  .scrollingtable2 > div:before,
+  .scrollingtable2 > div > div:after,
+  .scrollingtable3 > div:before,
+  .scrollingtable3 > div > div:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    left: 100;
+  }
+  .scrollingtable > div > div, .scrollingtable1 > div > div, .scrollingtable2 > div > div, .scrollingtable3 > div > div {
+    min-height: 0/*64.5px*/; /* Increase min-height by 1.5 times */
+    max-height: 100%;
+    overflow: scroll/*auto*/; /*set to auto if using fixed or % width; else scroll*/
+    overflow-x: hidden;
+    border: 1px solid black; /*border around table body*/
+  }
+  .scrollingtable > div > div:after, .scrollingtable1 > div > div:after, .scrollingtable2 > div > div:after, .scrollingtable3 > div > div:after {background: white;} /*match page background color*/
+  .scrollingtable > div > div > table, .scrollingtable1 > div > div > table, .scrollingtable2 > div > div > table, .scrollingtable3 > div > div > table {
+    width: 100%;
+    border-spacing: 0;
+    margin-top: -30px; /* Increase margin by 1.5 times */
+    /*margin-right: 17px;*/ /*uncomment if using % width*/
+  }
+  .scrollingtable > div > div > table > caption, .scrollingtable1 > div > div > table > caption, .scrollingtable2 > div > div > table > caption, .scrollingtable3 > div > div > table > caption {
+    position: absolute;
+    top: -30px; /* Increase top by 1.5 times */
+    margin-top: -1.5px; /* Increase margin by 1.5 times */
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+  }
+  .scrollingtable > div > div > table > * > tr > *, .scrollingtable1 > div > div > table > * > tr > *, .scrollingtable2 > div > div > table > * > tr > *, .scrollingtable3 > div > div > table > * > tr > * {padding: 0;}
+  .scrollingtable > div > div > table > thead, .scrollingtable1 > div > div > table > thead, .scrollingtable2 > div > div > table > thead, .scrollingtable3 > div > div > table > thead {
+    vertical-align: bottom;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .scrollingtable > div > div > table > thead > tr > * > div, .scrollingtable1 > div > div > table > thead > tr > * > div, .scrollingtable2 > div > div > table > thead > tr > * > div, .scrollingtable3 > div > div > table > thead > tr > * > div {
+    display: inline-block;
+    padding: 0 9px 0 9px; /* Increase padding by 1.5 times */
+  }
+  .scrollingtable > div > div > table > thead > tr > :first-child:before, .scrollingtable1 > div > div > table > thead > tr > :first-child:before, .scrollingtable2 > div > div > table > thead > tr > :first-child:before, .scrollingtable3 > div > div > table > thead > tr > :first-child:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px; /* Increase height by 1.5 times */
+    border-left: 1px solid black; /*leftmost header border*/
+  }
+  .scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable > div > div > table > thead > tr > * > div > div:first-child,
+  .scrollingtable > div > div > table > thead > tr > * + :before,
+  .scrollingtable1 > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable1 > div > div > table > thead > tr > * > div > div:first-child,
+  .scrollingtable1 > div > div > table > thead > tr > * + :before,
+  .scrollingtable2 > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable2 > div > div > table > thead > tr > * > div > div:first-child,
+  .scrollingtable2 > div > div > table > thead > tr > * + :before,
+  .scrollingtable3 > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable3 > div > div > table > thead > tr > * > div > div:first-child,
+  .scrollingtable3 > div > div > table > thead > tr > * + :before {
+    position: absolute;
+    top: 0;
+    white-space: pre-wrap;
+    color: white; /*header row font color*/
+  }
+  .scrollingtable > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable > div > div > table > thead > tr > * > div[label]:after,
+  .scrollingtable1 > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable1 > div > div > table > thead > tr > * > div[label]:after,
+  .scrollingtable2 > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable2 > div > div > table > thead > tr > * > div[label]:after,
+  .scrollingtable3 > div > div > table > thead > tr > * > div[label]:before,
+  .scrollingtable3 > div > div > table > thead > tr > * > div[label]:after {content: attr(label);}
+  .scrollingtable > div > div > table > thead > tr > * + :before, .scrollingtable1 > div > div > table > thead > tr > * + :before, .scrollingtable2 > div > div > table > thead > tr > * + :before, .scrollingtable3 > div > div > table > thead > tr > * + :before {
+    content: "";
+    display: block;
+    min-height: 30px; /* Increase min-height by 1.5 times */
+    padding-top: 1.5px; /* Increase padding by 1.5 times */
+    border-left: 1px solid black; /*borders between header cells*/
+  }
+  .scrollingtable .scrollbarhead, .scrollingtable1 .scrollbarhead, .scrollingtable2 .scrollbarhead, .scrollingtable3 .scrollbarhead {float: right;}
+  .scrollingtable .scrollbarhead:before, .scrollingtable1 .scrollbarhead:before, .scrollingtable2 .scrollbarhead:before, .scrollingtable3 .scrollbarhead:before {
+    position: absolute;
+    width: 150px; /* Increase width by 1.5 times */
+    top: -1.5px; /* Increase top by 1.5 times */
+    background: white; /*match page background color*/
+  }
+  .scrollingtable > div > div > table > tbody > tr:after, .scrollingtable1 > div > div > table > tbody > tr:after, .scrollingtable2 > div > div > table > tbody > tr:after, .scrollingtable3 > div > div > table > tbody > tr:after {
+    content: "";
+    display: table-cell;
+    position: relative;
+    padding: 0;
+    border-top: 1px solid black;
+    top: -1.5px; /* Increase top by 1.5 times */
+  }
+  .scrollingtable > div > div > table > tbody, .scrollingtable1 > div > div > table > tbody, .scrollingtable2 > div > div > table > tbody, .scrollingtable3 > div > div > table > tbody {vertical-align: top;}
+  .scrollingtable > div > div > table > tbody > tr, .scrollingtable1 > div > div > table > tbody > tr, .scrollingtable2 > div > div > table > tbody > tr, .scrollingtable3 > div > div > table > tbody > tr {background: white;}
+  .scrollingtable > div > div > table > tbody > tr > *, .scrollingtable1 > div > div > table > tbody > tr > *, .scrollingtable2 > div > div > table > tbody > tr > *, .scrollingtable3 > div > div > table > tbody > tr > * {
+    border-bottom: 1px solid black;
+    padding: 0 9px 0 9px; /* Increase padding by 1.5 times */
+    height: 30px; /* Increase height by 1.5 times */
+  }
+  .scrollingtable > div > div > table > tbody:last-of-type > tr:last-child > *, .scrollingtable1 > div > div > table > tbody:last-of-type > tr:last-child > *, .scrollingtable2 > div > div > table > tbody:last-of-type > tr:last-child > *, .scrollingtable3 > div > div > table > tbody:last-of-type > tr:last-child > * {border-bottom: none;}
+  .scrollingtable > div > div > table > tbody > tr:nth-child(even), .scrollingtable1 > div > div > table > tbody > tr:nth-child(even), .scrollingtable2 > div > div > table > tbody > tr:nth-child(even), .scrollingtable3 > div > div > table > tbody > tr:nth-child(even) {background: gainsboro;} /*alternate row color*/
+  .scrollingtable > div > div > table > tbody > tr > * + *, .scrollingtable1 > div > div > table > tbody > tr > * + *, .scrollingtable2 > div > div > table > tbody > tr > * + *, .scrollingtable3 > div > div > table > tbody > tr > * + * {border-left: 1px solid black;} /*borders between body cells*/
+  /*
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    margin: 0 1000px 0 200px;
+   
+    width: 75%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: center;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  
+  .database_table{
+    overflow: scroll;
+    height: 200px;
+    width: 500px;
+  }
+  */
+  

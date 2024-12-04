@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="dashboard_style.css">
+    <link rel="stylesheet" href="table.css"> <!-- Ensure this link is correct -->
     <title>Database-hcmut-24</title>
 </head>
 
@@ -18,12 +19,12 @@
             <div class="logo-name"><span>Group4</span></div>
         </a>
         <ul class="side-menu">
-            <li><a href="#"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
-            <li><a href="#"><i class='bx bx-store-alt'></i>Branch</a></li>
-            <li class="active"><a href="#"><i class='bx bx-analyse'>Database</i></a></li>
-            <li><a href="#"><i class='bx bx-message-square-dots'>Device</i></a></li>
-            <li><a href="#"><i class='bx bx-group'></i>Customers</a></li>
-            <li><a href="#"><i class='bx bx-cog'></i>Settings</a></li>
+            <li><a href="#" id="dashboard-menu"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li><a href="#" id="branch-menu"><i class='bx bx-store-alt'></i>Branch</a></li>
+            <li class="active"><a href="#" id="database-menu"><i class='bx bx-analyse'>Database</i></a></li>
+            <li><a href="#" id="device-menu"><i class='bx bx-message-square-dots'>Device</i></a></li>
+            <li><a href="#" id="customers-menu"><i class='bx bx-group'></i>Customers</a></li>
+            <li><a href="#" id="settings-menu"><i class='bx bx-cog'></i>Settings</a></li>
         </ul>
         <ul class="side-menu">
             <li>
@@ -54,7 +55,7 @@
                 <span class="count">12</span>
             </a>
             <a href="#" class="profile">
-                <img src="images/hcmut.png">
+                <img src="../image/hcmut.png">
             </a>
         </nav>
 
@@ -65,11 +66,10 @@
                 <div class="left">
                     <h1>Dashboard</h1>
                     <ul class="breadcrumb">
-                        <li><a href="#">
-                                Database
-                            </a></li>
-                        /
-                        <li><a href="#" class="active">Branch</a></li>
+                        <li id="breadcrumb-database"><a href="#">Database</a></li>
+                        <li id="breadcrumb-branch"><a href="#">/ Branch</a></li>
+                        <li id="breadcrumb-device"><a href="#">/ Device</a></li>
+                        <li id="breadcrumb-customer"><a href="#">/ Customer</a></li>
                     </ul>
                 </div>
                 <a href="#" class="report">
@@ -81,9 +81,152 @@
         </main>
 
     </div>
+    <div id="scrollingtable1" class="scrollingtable1">
+        <div>
+            <div>
+                <table>
+                    <caption>Top Caption 1</caption>
+                    <thead>
+                        <tr>
+                            <th><div label="Column 1"></div></th>
+                            <th><div label="Column 2"></div></th>
+                            <th><div label="Column 3"></div></th>
+                            <th>
+                                <div><div>Column 4</div><div>Column 4</div></div>
+                            </th>
+                            <th class="scrollbarhead"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
+    <div id="scrollingtable2" class="scrollingtable2">
+        <div>
+            <div>
+                <table>
+                    <caption>Top Caption 2</caption>
+                    <thead>
+                        <tr>
+                            <th><div label="Column 1"></div></th>
+                            <th><div label="Column 2"></div></th>
+                            <th><div label="Column 3"></div></th>
+                            <th>
+                                <div><div>Column 4</div><div>Column 4</div></div>
+                            </th>
+                            <th class="scrollbarhead"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="scrollingtable3" class="scrollingtable3">
+        <div>
+            <div>
+                <table>
+                    <caption>Top Caption 3</caption>
+                    <thead>
+                        <tr>
+                            <th><div label="Column 1"></div></th>
+                            <th><div label="Column 2"></div></th>
+                            <th><div label="Column 3"></div></th>
+                            <th>
+                                <div><div>Column 4</div><div>Column 4</div></div>
+                            </th>
+                            <th class="scrollbarhead"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="scrollingtable4" class="scrollingtable">
+        <div>
+            <div>
+                <table>
+                    <caption>Top Caption</caption>
+                    <thead>
+                        <tr>
+                            <th><div label="Column 1"></div></th>
+                            <th><div label="Column 2"></div></th>
+                            <th><div label="Column 3"></div></th>
+                            <th>
+                                <div><div>Column 4</div><div>Column 4</div></div>
+                            </th>
+                            <th class="scrollbarhead"/> <!--ALWAYS ADD THIS EXTRA CELL AT END OF HEADER ROW-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum</td><td>Dolor</td><td>Sit</td><td>Amet consectetur</td></tr>
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <script src="index.js"></script>
     <script src="../logout/logout.js"></script>
+    <script src="branch.js"></script>
+    <script src="database.js"></script>
+    <script src="device.js"></script>
+    <script src="customer.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 
 </html>

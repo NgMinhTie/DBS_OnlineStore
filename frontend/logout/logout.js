@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             // Chuyển hướng về trang login.html
-            window.location.href = "login.html";
+            window.location.href = "../login/login.html"; // Updated path
         });
     } else {
         console.error("Logout button not found");

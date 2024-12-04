@@ -14,7 +14,8 @@ loginButton.addEventListener("click", function (e) {
     // Kiểm tra thông tin đăng nhập
     if (username === "default" && password === "11111111") {
         // Nếu đúng, chuyển hướng đến trang dashboard.html
-        window.location.href = "dashboard.html";
+        window.location.href = "../dashboard/dashboard.html";
+        //window.location.href = "dashboard(cv).html";
     } else {
         // Nếu sai, hiển thị thông báo lỗi
         alert("Invalid username or password. Please try again.");
