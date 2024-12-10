@@ -1,0 +1,22 @@
+INSERT INTO Branch (ID, Name, Location, DiscountType) 
+VALUES
+(1, 'Branch1', '123 Main Street, Springfield', 'Student Discount'),
+(2, 'Branch2', '456 Elm Street, Springfield', 'Senior Discount'),
+(3, 'Branch3', '789 Oak Street, Springfield', 'Membership Discount'),
+(4, 'Branch4', '101 Maple Avenue, Springfield', 'Holiday Discount'),
+(5, 'Branch5', '202 Birch Road, Springfield', 'No Discount'),
+(6, 'Branch6', '303 Pine Lane, Springfield', 'Seasonal Discount'),
+(7, 'Branch7', '404 Cedar Drive, Springfield', 'Student Discount'),
+(8, 'Branch8', '505 Willow Boulevard, Springfield', 'Flash Sale Discount'),
+(9, 'Branch9', '606 Redwood Street, Springfield', 'Senior Discount'),
+(10, 'Branch10', '707 Spruce Avenue, Springfield', 'Family Discount'),
+(11, 'Branch11', '808 Poplar Lane, Springfield', 'Student Discount'),
+(12, 'Branch12', '909 Fir Street, Springfield', 'Holiday Discount'),
+(13, 'Branch13', '1010 Aspen Way, Springfield', 'Membership Discount'),
+(14, 'Branch14', '1111 Alder Road, Springfield', 'No Discount'),
+(15, 'Branch15', '1212 Sycamore Drive, Springfield', 'Seasonal Discount'),
+(16, 'Branch16', '1313 Cypress Street, Springfield', 'Senior Discount'),
+(17, 'Branch17', '1414 Hickory Lane, Springfield', 'Family Discount'),
+(18, 'Branch18', '1515 Juniper Boulevard, Springfield', 'Flash Sale Discount'),
+(19, 'Branch19', '1616 Magnolia Avenue, Springfield', 'Holiday Discount'),
+(20, 'Branch20', '1717 Palm Road, Springfield', 'Student Discount');
