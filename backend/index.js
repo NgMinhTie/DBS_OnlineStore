@@ -21,13 +21,13 @@ pool.connect(function (err) {
     else console.log("Successful")
 })
 
-//* PROCEDURE FOR SELECTING
+//* PROCEDURE FOR SELECTING PROCEDURE
 app.post("/notknown1", async (req, res) => {
-  //! BODY REQUEST
+  //* BODY REQUEST
 //   {
 //   "customerID": 2
 // }
-  //!
+  //*
   try {
     // Execute the query directly
     const { customerID } = req.body;
@@ -48,19 +48,23 @@ app.post("/notknown1", async (req, res) => {
 });
 
 
-//TODO: CANNOT RUN
+//!: CANNOT RUN. PLEASE DO NOT USE AS A TEST
 app.post("/notknown2", async (req, res) => {
-  //! BODY REQUEST
-  //   {
-  //   "customerID": 2
-  // }
-  //!
+  //* BODY REQUEST
+//  {
+//   "BranchID": 1,
+//   "StartMonth": 10,
+//   "StartYear": 2002,
+//   "EndMonth": 1,
+//   "EndYear": 2003
+// }
+  //*
   try {
     // Execute the query directly
     const { BranchID, StartMonth, StartYear, EndMonth, EndYear } = req.body;
     const [result] = await pool
       .promise()
-      .query("CALL GetBranchSalesReport(?)", [
+      .query("CALL GetBranchSalesReport(?, ?, ?, ?, ?)", [
         BranchID,
         StartMonth,
         StartYear,
@@ -79,15 +83,39 @@ app.post("/notknown2", async (req, res) => {
     return res.status(500).send("Cannot Select");
   }
 });
-//* PROCEDURE FOR SELECTING
+//* PROCEDURE FOR SELECTING PROCEDURE
 
 //* PROCEDURE FOR INSERTING
-app.post("/notknown10", async (req, res) => {
+app.post("/notknown3", async (req, res) => {
+  //* BODY REQUEST
+// {
+//   "accountID" : 1,
+//   "CusPoint": 12,
+//   "FName": "Steven",
+//   "MName": "Nguyen",
+//   "LName": "Minh",
+//   "DOB": "2003-12-30",
+//   "Gender": "Male",
+//   "Address": "None",
+//   "PhoneNumber": "0457346564"
+  
+// }
+  //*
   try {
-    const { accountID, CusPoint, FName, MName, LName, DOB, Gender, Address, PhoneNumber } = req.body;
+    const {
+      accountID,
+      CusPoint,
+      FName,
+      MName,
+      LName,
+      DOB,
+      Gender,
+      Address,
+      PhoneNumber,
+    } = req.body;
     const [result] = await pool
       .promise()
-      .query("CALL GetCustomerDetails(?)", [
+      .query("CALL AddNewCustomer(?, ?, ?, ?, ?, ?, ?, ?, ?)", [
         accountID,
         CusPoint,
         FName,
@@ -98,11 +126,10 @@ app.post("/notknown10", async (req, res) => {
         Address,
         PhoneNumber,
       ]);
-    
-    
-  }
-  catch {
-    
+
+    return res.send(`Insert successful Customer ${accountID}`);
+  } catch (err) {
+    return res.send("Server cannot send response");
   }
 });
 //* PROCEDURE FOR INSERTING
