@@ -1,5 +1,4 @@
-INSERT INTO Branch (ID, Name, Location, DiscountType) 
-VALUES
+INSERT INTO Branch (ID, Name, Location, DiscountType) VALUES
 (1, 'Branch1', '123 Main Street, Springfield', 'Student Discount'),
 (2, 'Branch2', '456 Elm Street, Springfield', 'Senior Discount'),
 (3, 'Branch3', '789 Oak Street, Springfield', 'Membership Discount'),
@@ -19,4 +18,14 @@ VALUES
 (17, 'Branch17', '1414 Hickory Lane, Springfield', 'Family Discount'),
 (18, 'Branch18', '1515 Juniper Boulevard, Springfield', 'Flash Sale Discount'),
 (19, 'Branch19', '1616 Magnolia Avenue, Springfield', 'Holiday Discount'),
-(20, 'Branch20', '1717 Palm Road, Springfield', 'Student Discount');
+(20, 'Branch20', '1717 Palm Road, Springfield', 'Student Discount'),
+(21, 'Branch21', '1818 Olive Street, Springfield', 'Senior Discount'),
+(22, 'Branch22', '1919 Walnut Avenue, Springfield', 'Membership Discount'),
+(23, 'Branch23', '2020 Chestnut Lane, Springfield', 'Seasonal Discount'),
+(24, 'Branch24', '2121 Beech Road, Springfield', 'Family Discount'),
+(25, 'Branch25', '2222 Cherry Boulevard, Springfield', 'Flash Sale Discount'),
+(26, 'Branch26', '2323 Dogwood Avenue, Springfield', 'Holiday Discount'),
+(27, 'Branch27', '2424 Elmwood Drive, Springfield', 'No Discount'),
+(28, 'Branch28', '2525 Pinecone Road, Springfield', 'Student Discount'),
+(29, 'Branch29', '2626 Sequoia Street, Springfield', 'Seasonal Discount'),
+(30, 'Branch30', '2727 Willow Way, Springfield', 'Family Discount');
