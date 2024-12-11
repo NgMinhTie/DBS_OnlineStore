@@ -71,6 +71,36 @@ document.getElementById('insert-button-table3').addEventListener('click', functi
         const dob = document.getElementById('dob').value;
         const gender = document.getElementById('gender').value;
         const address = document.getElementById('address').value;
+        /*// Send form data to the backend
+        fetch('/link_ve_BE', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            accountId: accountId,
+            point: point,
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            dob: dob,
+            gender: gender,
+            address: address
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+            alert('Customer inserted successfully');
+            } else {
+            alert('Error inserting customer with BE response.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error inserting customer');
+        });
+        */
 
         // Check for duplicate ID
         const tableBody = document.getElementById('customer-table-body');
