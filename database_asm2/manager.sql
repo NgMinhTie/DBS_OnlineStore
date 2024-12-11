@@ -1,4 +1,4 @@
--- Insert sample data into Manager table (20 records)
+
 INSERT INTO Manager (Manager_ID, BranchID)
 VALUES
 ('MN12345', 1),
@@ -20,4 +20,14 @@ VALUES
 ('MN10987', 17),
 ('MN21098', 18),
 ('MN32109', 19),
-('MN43210', 20);
+('MN43210', 20),
+('MN54322', 21),
+('MN65433', 22),
+('MN76544', 23),
+('MN87655', 24),
+('MN98766', 25),
+('MN09877', 26),
+('MN10988', 27),
+('MN21099', 28),
+('MN32110', 29),
+('MN43211', 30);
