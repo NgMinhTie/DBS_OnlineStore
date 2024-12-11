@@ -1,10 +1,14 @@
 const express = require('express');
 const mysql = require('mysql2');
-const cors = require('cors'); // Thêm dòng này
+// const cors = require('cors'); // Thêm dòng này
+const cors = require("cors");
+
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Thêm dòng này
+
+//app.use(bodyParser.json({ type: "application/json", strict: true }));
+// app.use(cors()); // Thêm dòng này
 const PORT = 100;
 const pool = mysql.createConnection({
   host: "localhost",
@@ -16,6 +20,13 @@ const pool = mysql.createConnection({
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+app.use(
+  cors({
+    origin: "*", // Allow only frontend from localhost:5501
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 pool.connect(function (err) {
   if (err)
@@ -37,57 +48,163 @@ app.post("/as", async(req, res) => {
   }
 });
 
+//!NOT SUCCESSFUL BECAUSE OF WRONG DATA TYPE
 app.post("/notknown1", async (req, res) => {
   try {
+//      {
+//     "accountID" : "CP123456789"
+    
+//  }
     const { customerID } = req.body;
     const [result] = await pool.promise().query("CALL GetCustomerDetails(?)", [customerID]);
     console.log('Data sent to client:', result); // Thêm dòng này để kiểm tra dữ liệu gửi đi
-    return res.status(200).json({ result });
+    // return res.status(200).json({ result });
+
+    if (result && result.length > 0) {
+      console.log('Find out the customer successfully');
+      res.status(200).json({ success: true, data: result, message: 'Find out the customer successfully' });
+    }
+    else {
+      console.log('Cannot find the customer');
+      res
+        .status(200)
+        .json({
+          success: false,
+          data: result[0],
+          message: "Cannot find out the user",
+        });
+    }
   } catch (err) {
     console.error("Cannot select:", err.message);
     return res.status(500).send("Cannot Select");
   }
 });
 
-app.get('/getCustomerList', async (req, res) => {
-    try {
-        const [result] = await pool.promise().query('SELECT * FROM cellphone.customer');
-        return res.status(200).json(result);
-    } catch (err) {
-        console.error('Error fetching customer list:', err.message);
-        return res.status(500).send('Error fetching customer list');
-    }
+//SUCCESSFUL
+app.get("/getCustomerList", async (req, res) => {
+  try {
+    const [result] = await pool.promise().query("SELECT * FROM Customer");
+
+    // Log dữ liệu dưới dạng JSON
+    //console.log("Customer list:", JSON.stringify(result, null, 2));
+    console.log("DEBUG Backend");
+    // Trả dữ liệu về client
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error("Error fetching customer list:", err.message);
+
+    // Trả lỗi nếu có
+    return res.status(500).send("Error fetching customer list");
+  }
+});
+//SUCCESSFUL
+app.get("/getBranchList", async (req, res) => {
+  try {
+    const [result] = await pool.promise().query("SELECT * FROM Branch");
+
+    // Log dữ liệu dưới dạng JSON
+    //console.log("Customer list:", JSON.stringify(result, null, 2));
+    console.log("DEBUG Backend");
+    // Trả dữ liệu về client
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error("Error fetching cbranch list:", err.message);
+
+    // Trả lỗi nếu có
+    return res.status(500).send("Error fetching branch list");
+  }
 });
 
-//!: CANNOT RUN. PLEASE DO NOT USE AS A TEST
+//SUCCESSFUL
+app.get("/getDeviceList", async (req, res) => {
+  try {
+    const [result] = await pool.promise().query("SELECT DeviceID, DeviceName, Status, DevicePrice FROM devicetype JOIN device");
+
+    // Log dữ liệu dưới dạng JSON
+    //console.log("Customer list:", JSON.stringify(result, null, 2));
+    console.log("DEBUG Backend");
+    // Trả dữ liệu về client
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error("Error fetching device list:", err.message);
+
+    // Trả lỗi nếu có
+    return res.status(500).send("Error fetching device list");
+  }
+});
+
+//SUCCESSFUL
 app.post("/notknown2", async (req, res) => {
   //* BODY REQUEST
-//  {
-//   "BranchID": 1,
-//   "StartMonth": 10,
-//   "StartYear": 2002,
-//   "EndMonth": 1,
-//   "EndYear": 2003
-// }
+  //  {
+  //   "BranchID": 1,
+  //   "StartMonth": 10,
+  //   "StartYear": 2002,
+  //   "EndMonth": 1,
+  //   "EndYear": 2003
+  // }
   //*
+
   try {
     // Execute the query directly
     const { BranchID, StartMonth, StartYear, EndMonth, EndYear } = req.body;
-    const [result] = await pool
+    // const [result] = await pool
+    //   .promise()
+    //   .query("CALL GetBranchSalesReport(?, ?, ?, ?, ?)", [
+    //     BranchID[0],
+    //     StartMonth[0],
+    //     StartYear[0],
+    //     EndMonth[0],
+    //     EndYear[0],
+    //   ]);
+    
+    // const [result2] = await pool
+    //   .promise()
+    //   .query("CALL GetBranchSalesReport(?, ?, ?, ?, ?)", [
+    //     BranchID[1],
+    //     StartMonth[1],
+    //     StartYear[1],
+    //     EndMonth[1],
+    //     EndYear[1],
+    //   ]);
+    const lengthArray = BranchID.length;
+    const result = [];
+    for (let i = 0; i < lengthArray; i++){
+      result[i] = [BranchID[i], StartMonth[i], StartYear[i], EndMonth[i], EndYear[i]];
+      result[i] = await pool
       .promise()
       .query("CALL GetBranchSalesReport(?, ?, ?, ?, ?)", [
-        BranchID,
-        StartMonth,
-        StartYear,
-        EndMonth,
-        EndYear,
+        BranchID[i],
+        StartMonth[i],
+        StartYear[i],
+        EndMonth[i],
+        EndYear[i],
       ]);
+      
+    }
+  const extractedData = result
+    .flat(Infinity) // Flatten all nested arrays
+    .filter((item) => item && item.BranchID) // Keep only objects with a BranchID
+    .map(({ BranchID, BranchName, TotalBills, TotalSales }) => ({
+    BranchID,
+    BranchName,
+    TotalBills,
+    TotalSales,
+  })); // Extract the desired fields
 
+// Send the cleaned data in the response
+return res.status(200).json({ extractedData });
     // const customerDetails = result[0];
     // const phoneNumbers = result[1];
     // const vouchers = result[2];
+    
     return res.status(200).json({
-      result,
+      // BranchID: result[0].BranchID[0],
+      // StartMonth: result[0].StartMonth,
+      // StartYear: result[0].StartYear,
+      // EndMonth: result[0].StartMonth,
+      // EndYear: result[0].EndMonth
+      result
     });
   } catch (err) {
     console.error("Cannot select:", err.message);
@@ -96,21 +213,21 @@ app.post("/notknown2", async (req, res) => {
 });
 //* PROCEDURE FOR SELECTING PROCEDURE
 
-//* PROCEDURE FOR INSERTING
+//! NOT SUCCESS BECAUSE OF DATA TYPE
 app.post("/notknown3", async (req, res) => {
   //* BODY REQUEST
-// {
-//   "accountID" : 1,
-//   "CusPoint": 12,
-//   "FName": "Steven",
-//   "MName": "Nguyen",
-//   "LName": "Minh",
-//   "DOB": "2003-12-30",
-//   "Gender": "Male",
-//   "Address": "None",
-//   "PhoneNumber": "0457346564"
-  
-// }
+  // {
+  //   "accountID" : "CP901234567",
+  //   "CusPoint": 12,
+  //   "FName": "Steven",
+  //   "MName": "Nguyen",
+  //   "LName": "Minh",
+  //   "DOB": "2003-12-30",
+  //   "Gender": "Male",
+  //   "Address": "None",
+  //   
+
+  // }
   //*
   try {
     const {
@@ -122,11 +239,10 @@ app.post("/notknown3", async (req, res) => {
       DOB,
       Gender,
       Address,
-      PhoneNumber,
     } = req.body;
     const [result] = await pool
       .promise()
-      .query("CALL AddNewCustomer(?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+      .query("CALL AddNewCustomer(?, ?, ?, ?, ?, ?, ?, ?)", [
         accountID,
         CusPoint,
         FName,
@@ -135,7 +251,6 @@ app.post("/notknown3", async (req, res) => {
         DOB,
         Gender,
         Address,
-        PhoneNumber,
       ]);
 
     //const query_result = await pool.promise().query("SELECT * from customer");
@@ -210,4 +325,3 @@ app.post("/notknown7", async (req, res) => {
 //   }
 //   else console.log(result);
 // })
-
