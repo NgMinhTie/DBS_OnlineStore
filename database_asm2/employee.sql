@@ -202,4 +202,4 @@ VALUES
 ('ST10168', 'Martinez', 'Ava', '2047-08-20', 8, 2047, '6789 Cedar St', 'Female', 'MN21099'),
 ('ST10169', 'Wilson', 'Jack', '2047-09-21', 9, 2047, '7890 Birch St', 'Male', 'MN32110'),
 ('ST10170', 'Garcia', 'Mason', '2047-10-22', 10, 2047, '8901 Pine St', 'Female', 'MN43211'),
-('ST10171', 'Taylor', 'Charlotte', '2047-11-23', 11, 2047, '9012 Oak St', 'Male', 'MN54322'),
+('ST10171', 'Taylor', 'Charlotte', '2047-11-23', 11, 2047, '9012 Oak St', 'Male', 'MN54322');
