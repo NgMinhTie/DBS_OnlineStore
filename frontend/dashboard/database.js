@@ -12,7 +12,7 @@ document.getElementById('database-menu').addEventListener('click', function() {
 function searchTable(searchTerm, tableBodyId) {
     const tableBody = document.getElementById(tableBodyId);
     const rows = tableBody.getElementsByTagName('tr');
-    const searchTerms = searchTerm.split(' ').filter(term => term); // Split and filter empty terms
+    const searchTerms = searchTerm.toLowerCase().split(' ').filter(term => term); // Split and filter empty terms
     let found = false;
 
     for (let row of rows) {
@@ -36,7 +36,8 @@ function searchTable(searchTerm, tableBodyId) {
 
 document.getElementById('search-button').addEventListener('click', function() {
     const customerID = document.getElementById('search-input').value;
-    fetchCustomerDetails(customerID);
+    searchTable(customerID, 'customer-table-body');
+    //fetchCustomerDetails(customerID);
 });
 
 document.getElementById('search-button-table1').addEventListener('click', function() {
@@ -78,59 +79,27 @@ function populateCustomerTable(customers) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${customer.AccountID}</td>
-            <td>${customer.FName} ${customer.MName} ${customer.LName}</td>
-            <td>${customer.Address}</td>
-            <td>${customer.PhoneNumber}</td>
             <td>${customer.CusPoint}</td>
+            <td>${customer.FName} ${customer.MName} ${customer.LName}</td>
+            <td>${customer.DOB}</td>
+            <td>${customer.Gender}</td>
+            <td>${customer.Address}</td>
         `;
         tableBody.appendChild(row);
     });
 }
 
-async function fetchCustomerDetails(customerID) {
-    try {
-        const response = await fetch('https://your-server-endpoint/notknown1', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ customerID })
-        });
-        const data = await response.json();
-        console.log('Data received from server:', data); // Thêm dòng này để kiểm tra dữ liệu nhận được
-        populateCustomerDetails(data.result);
-    } catch (error) {
-        console.error('Error fetching customer details:', error);
-    }
-}
-
-function populateCustomerDetails(data) {
-    const tableBody = document.getElementById('customer-table-body');
-    tableBody.innerHTML = ''; // Clear existing content
-
-    if (data.length === 0 || data[0].length === 0) {
-        console.error('No customer details found');
-        return;
-    }
-
-    const customerDetails = data[0][0];
-    const phoneNumber = data[1][0]?.PhoneNumber || 'N/A'; // Kiểm tra nếu không có số điện thoại
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${customerDetails.AccountID}</td>
-        <td>${customerDetails.FName} ${customerDetails.MName} ${customerDetails.LName}</td>
-        <td>${customerDetails.Address}</td>
-        <td>${phoneNumber}</td>
-        <td>${customerDetails.CusPoint}</td>
-    `;
-    tableBody.appendChild(row);
-}
 
 async function fetchTable1Data() {
     try {
-        const response = await fetch('https://your-server-endpoint/table1');
+        const response = await fetch('http://localhost:100/getDeviceList', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         const data = await response.json();
+        console.log("DEBUG", data);
         populateTable1(data);
     } catch (error) {
         console.error('Error fetching table1 data:', error);
@@ -144,10 +113,10 @@ function populateTable1(data) {
     data.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${item.deviceId}</td>
-            <td>${item.deviceName}</td>
-            <td>${item.totalSales}</td>
-            <td>${item.price}</td>
+            <td>${item.DeviceID}</td>
+            <td>${item.DeviceName}</td>
+            <td>${item.Status}</td>
+            <td>${item.DevicePrice}</td>
         `;
         tableBody.appendChild(row);
     });
@@ -155,8 +124,21 @@ function populateTable1(data) {
 
 async function fetchTable2Data() {
     try {
-        const response = await fetch('https://your-server-endpoint/table2');
+        const response = await fetch('http://localhost:100/notknown2', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            BranchID: Array.from({ length: 29 }, (_, i) => i + 1),
+            StartMonth: Array(29).fill(10),
+            StartYear: Array(29).fill(2002),
+            EndMonth: Array(29).fill(1),
+            EndYear: Array(29).fill(2003)
+            }),
+        });
         const data = await response.json();
+        console.log("DEBUG", data);
         populateTable2(data);
     } catch (error) {
         console.error('Error fetching table2 data:', error);
@@ -167,13 +149,18 @@ function populateTable2(data) {
     const tableBody = document.getElementById('table2-body');
     tableBody.innerHTML = ''; // Clear existing content
 
-    data.forEach(item => {
+    if (!data.extractedData || !Array.isArray(data.extractedData)) {
+        console.error('Extracted data is not an array:', data);
+        return;
+    }
+
+    data.extractedData.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${item.deviceName}</td>
-            <td>${item.deviceBranch}</td>
-            <td>${item.quantity}</td>
-            <td>${item.price}</td>
+            <td>${item.BranchID}</td>
+            <td>${item.BranchName}</td>
+            <td>${item.TotalBills}</td>
+            <td>${item.TotalSales}</td>
         `;
         tableBody.appendChild(row);
     });
@@ -181,8 +168,15 @@ function populateTable2(data) {
 
 async function fetchTable4Data() {
     try {
-        const response = await fetch('https://your-server-endpoint/table4');
+        const response = await fetch('http://localhost:100/getBranchList', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
         const data = await response.json();
+        console.log("DEBUG", data);
+        //populateCustomerTable(data);
         populateTable4(data);
     } catch (error) {
         console.error('Error fetching table4 data:', error);
@@ -196,13 +190,13 @@ function populateTable4(data) {
     data.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${item.branchId}</td>
-            <td>${item.branchName}</td>
-            <td>${item.branchLocation}</td>
-            <td>${item.branchDiscountType}</td>
+            <td>${item.ID}</td>
+            <td>${item.Name}</td>
+            <td>${item.Location}</td>
+            <td>${item.DiscountType}</td>
         `;
         tableBody.appendChild(row);
-    });
+    })
 }
 
 async function fetchCustomerList() {
@@ -224,7 +218,7 @@ async function fetchCustomerList() {
 
 // Call the functions to fetch and populate data when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    fetchCustomerData();
+    //fetchCustomerData();
     fetchTable1Data();
     fetchTable2Data();
     fetchTable4Data();
