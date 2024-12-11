@@ -1,4 +1,5 @@
 INSERT INTO Device (DeviceType, Status, DevicePrice) VALUES
+  
 ('OL123456789', 'Active', 299.99),
 ('NE987654321', 'Inactive', 199.49),
 ('OL456789123', 'Active', 399.99),
