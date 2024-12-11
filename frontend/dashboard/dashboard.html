@@ -7,6 +7,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="dashboard_style.css">
     <link rel="stylesheet" href="table.css"> <!-- Ensure this link is correct -->
+    <link rel="stylesheet" href="insert.css">
     <title>Database-hcmut-24</title>
 </head>
 
@@ -94,7 +95,7 @@
                         <tr>
                             <th><div label="Device ID"></div></th>
                             <th><div label="Device Name"></div></th>
-                            <th><div label="Total Sales"></div></th>
+                            <th><div label="Status"></div></th>
                             <th>
                                 <div><div>Price</div><div>Price</div></div>
                             </th>
@@ -107,87 +108,7 @@
                       </tbody>
                 </table>
             </div>
-            <div class="button-container">
-                <button id="insert-button-table1">Insert</button>
-                <button id="update-button-table1">Update</button>
-                <button id="delete-button-table1">Delete</button>
-            </div>
         </div>
-    </div>
-
-    <div id="scrollingtable2" class="scrollingtable2">
-        <div>
-            <div class="search-container">
-                <input type="text" id="search-input-table2" placeholder="Search...">
-                <button id="search-button-table2">Search</button>
-            </div>
-            <div>
-                <table>
-                    <caption>Available Device List</caption>
-                    <thead>
-                        <tr>
-                            <th><div label="Device Name"></div></th>
-                            <th><div label="Device Branch"></div></th>
-                            <th><div label="Quantity"></div></th>
-                            <th>
-                                <div><div>Price</div><div>Price</div></div>
-                            </th>
-                            <th class="scrollbarhead"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="table2-body">
-                        <!-- Dynamic content will be inserted here -->
-                        <tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>
-                      </tbody>
-                </table>
-            </div>
-            <div class="button-container">
-                <button id="insert-button-table2">Insert</button>
-                <button id="update-button-table2">Update</button>
-                <button id="delete-button-table2">Delete</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="scrollingtable3" class="scrollingtable3">
-        <div>
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Search...">
-                <button id="search-button">Search</button>
-            </div>
-            <div>
-                <table>
-                    <caption>Customer List</caption>
-                    <thead>
-                        <tr>
-                            <th><div label="ID"></div></th>
-                            <th><div label="Point"></div></th>
-                            <th><div label="First Name"></div></th>
-                            <th><div label="Middle Name"></div></th>
-                            <th><div label="Last Name"></div></th>
-                            <th><div label="Date of Birth"></div></th>
-                            <th><div label="Gender"></div></th>
-                            <th>
-                                <div><div>Address</div><div>Address</div></div>
-                            </th>
-                            <th class="scrollbarhead"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="customer-table-body">
-                        <!-- Dynamic content will be inserted here -->
-                        <tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>
-                        <tr><td>1</td><td>400</td><td>vo</td><td>truc</td><td>son</td><td>10/8/2004</td><td>Male</td><td>015 lo 9 Binh Thanh</td></tr>
-                        <tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>
-                        <tr><td>1</td><td>400</td><td>vo</td><td>truc</td><td>son</td><td>10/8/2004</td><td>Male</td><td>015 lo 9 Binh Thanh</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="button-container">
-        <button id="insert-button-table3">Insert</button>
-        <button id="update-button-table3">Update</button>
-        <button id="delete-button-table3">Delete</button>
     </div>
 
     <div id="scrollingtable4" class="scrollingtable">
@@ -219,20 +140,93 @@
                 </table>
                 
             </div>
-            <div class="button-container">
-                <button id="insert-button-table4">Insert</button>
-                <button id="update-button-table4">Update</button>
-                <button id="delete-button-table4">Delete</button>
+        </div>
+    </div>
+    <div class="button-container">
+        <button id="insert-button-table4">Insert</button>
+        <button id="update-button-table4">Update</button>
+        <button id="delete-button-table4">Delete</button>
+    </div>
+
+    <div id="scrollingtable2" class="scrollingtable2">
+        <div>
+            <div class="search-container">
+                <input type="text" id="search-input-table2" placeholder="Search...">
+                <button id="search-button-table2">Search</button>
+            </div>
+            <div>
+                <table>
+                    <caption>Branch Statistics</caption>
+                    <thead>
+                        <tr>
+                            <th><div label="Branch ID"></div></th>
+                            <th><div label="Branch Name"></div></th>
+                            <th><div label="Total bills"></div></th>
+                            <th>
+                                <div><div>Total Income</div><div>Total Income</div></div>
+                            </th>
+                            <th class="scrollbarhead"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table2-body">
+                        <!-- Dynamic content will be inserted here -->
+                        <tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>
+                      </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <script src="index.js"></script>
+
+    <div id="scrollingtable3" class="scrollingtable3">
+        <div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="search-button">Search</button>
+            </div>
+            <div>
+                <table>
+                    <caption>Customer List</caption>
+                    <thead>
+                        <tr>
+                            <th><div label="ID"></div></th>
+                            <th><div label="Point"></div></th>
+                            <th><div label="First Name"></div></th>
+                            <th><div label="Middle Name"></div></th>
+                            <th><div label="Last Name"></div></th>
+                            <th><div label="Date of Birth"></div></th>
+                            <th><div label="Gender"></div></th>
+                            <th>
+                                <div><div>Address</div><div>Address</div></div>
+                            </th>
+                            <th class="scrollbarhead"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="customer-table-body">
+                        <!-- Dynamic content will be inserted here -->
+                        <tr><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td><td>NULL</td></tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="button-container">
+        <button id="insert-button-table3">Insert</button>
+        <button id="update-button-table3">Update</button>
+        <button id="delete-button-table3">Delete</button>
+    </div>
+
+    
+    <script src="../backend/index.js"></script>
     <script src="../logout/logout.js"></script>
     <script src="branch.js"></script>
     <script src="database.js"></script>
     <script src="device.js"></script>
     <script src="customer.js"></script>
     <script src="dashboard.js"></script>
+    <script src="customer_insert.js"></script>
+    <script src="customer_update.js"></script>
+    <script src="customer_delete.js"></script>
 </body>
 
 </html>
