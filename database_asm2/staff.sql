@@ -1,5 +1,5 @@
 -- Insert only EMP_ID values into Employee table
-INSERT INTO Employee (EMP_ID)
+INSERT INTO Staff (StaffID)
 VALUES
 ('ST10001'),
 ('ST10002'),
