@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     branchMenu.addEventListener('click', function() {
         hideAllTables();
         scrollingTable4.style.display = 'block';
+        scrollingTable2.style.display = 'block';
         //document.querySelector('#scrollingtable4 + .button-container').style.display = 'flex';
     });
 
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hideAllTables();
         scrollingTable1.style.display = 'block';
         //document.querySelector('#scrollingtable1 + .button-container').style.display = 'flex';
-        scrollingTable2.style.display = 'block';
+        
         //document.querySelector('#scrollingtable2 + .button-container').style.display = 'flex';
     });
 
