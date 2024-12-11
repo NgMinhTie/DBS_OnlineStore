@@ -1215,7 +1215,6 @@ BEGIN
     DECLARE bill_branch_id INT;
     DECLARE staff_branch_id INT;
 
-    -- Get the branch where the bill was created
     SELECT BranchID INTO bill_branch_id
     FROM Bill
     JOIN Stafff ON Bill.StaffID = Stafff.StaffID
@@ -1259,12 +1258,12 @@ BEGIN
 END$$
 
 DELIMITER ;
-use cellphone;
+
 
 DELIMITER $$
 
 CREATE FUNCTION CalculateTotalDiscount(
-    p_AccountID INT
+    p_AccountID VARCHAR(15)
 ) RETURNS DECIMAL(10,2)
 DETERMINISTIC
 BEGIN
@@ -1286,6 +1285,7 @@ END$$
 DELIMITER ;
 
 
+
 DELIMITER $$
 
 CREATE FUNCTION ValidatePhoneNumber(
@@ -1303,12 +1303,11 @@ BEGIN
 END$$
 
 DELIMITER ;
-use cellphone;
+
 
 DELIMITER $$
-
 CREATE PROCEDURE AddNewCustomer(
-    IN p_AccountID INT,
+    IN p_AccountID VARCHAR(15),
     IN p_CusPoint INT,
     IN p_FName VARCHAR(50),
     IN p_MName VARCHAR(50),
@@ -1331,7 +1330,6 @@ BEGIN
         SET MESSAGE_TEXT = 'AccountID already exists.';
     END IF;
 
-
     INSERT INTO Customer (AccountID, CusPoint, FName, MName, LName, DOB, Gender, Address)
     VALUES (p_AccountID, p_CusPoint, p_FName, p_MName, p_LName, p_DOB, p_Gender, p_Address);
     
@@ -1345,20 +1343,21 @@ DELIMITER ;
 
 
 
+
 DELIMITER $$
 
 CREATE PROCEDURE UpdateCustomerPoints(
-    IN p_AccountID INT,
+    IN p_AccountID VARCHAR(15),
     IN p_NewPoints INT
 )
 BEGIN
     UPDATE Customer
     SET CusPoint = p_NewPoints
     WHERE AccountID = p_AccountID;
-    
 END$$
 
 DELIMITER ;
+
 
 
 
@@ -1368,7 +1367,7 @@ CREATE PROCEDURE DeleteCustomer(
     IN p_PhoneNumber VARCHAR(15)
 )
 BEGIN
-    DECLARE v_AccountID INT;
+    DECLARE v_AccountID VARCHAR(15);
     DECLARE customer_exists INT;
 
     SELECT AccountID INTO v_AccountID
@@ -1400,10 +1399,11 @@ DELIMITER ;
 
 
 
+
 DELIMITER $$
 
 CREATE PROCEDURE GetCustomerDetails(
-    IN p_AccountID INT
+    IN p_AccountID VARCHAR(15)
 )
 BEGIN
     SELECT 
@@ -1428,6 +1428,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
 
 -- CALL GetCustomerDetails(1)
 
@@ -1462,9 +1463,10 @@ BEGIN
         COUNT(bill.BillID) > 0
     ORDER BY 
         TotalSales DESC;
-END$$bill
+END$$
 
 DELIMITER ;
+
 -- CALL GetBranchSalesReport(1, 1, 2024, 12, 2024); report show total sales+bills, tu 1/2024 -> 12/2024
 
 DELIMITER $$
