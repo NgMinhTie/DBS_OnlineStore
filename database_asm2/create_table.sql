@@ -53,7 +53,7 @@ CREATE TABLE Employee (
     FOREIGN KEY (ManagerID) REFERENCES Manager(Manager_ID)
 );
 
-CREATE TABLE Stafff (
+CREATE TABLE Staff (
     StaffID INT PRIMARY KEY,
     FOREIGN KEY (StaffID) REFERENCES Employee(EMP_ID)
 );
