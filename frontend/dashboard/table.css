@@ -54,9 +54,9 @@ body {
     line-height: 30px; /* Increase line height by 1.5 times */
     padding: 30px 0; /* Increase padding by 1.5 times */
     text-align: left;
-    margin: 15px 0; /* Increase margin for spacing between tables */
+    margin: 15px 100px; /* Increase margin for spacing between tables */
     margin-left: auto;
-    margin-right: auto;
+    /*margin-right: auto;*/
   }
   .scrollingtable *, .scrollingtable1 *, .scrollingtable2 *, .scrollingtable3 * {box-sizing: border-box;}
   .scrollingtable > div, .scrollingtable1 > div, .scrollingtable2 > div, .scrollingtable3 > div {
@@ -89,7 +89,7 @@ body {
     max-height: 100%;
     overflow: scroll/*auto*/; /*set to auto if using fixed or % width; else scroll*/
     overflow-x: hidden;
-    border: 1px solid black; /*border around table body*/
+    border: none; /* Hide border around the table body */
   }
   .scrollingtable > div > div:after, .scrollingtable1 > div > div:after, .scrollingtable2 > div > div:after, .scrollingtable3 > div > div:after {background: white;} /*match page background color*/
   .scrollingtable > div > div > table, .scrollingtable1 > div > div > table, .scrollingtable2 > div > div > table, .scrollingtable3 > div > div > table {
@@ -225,4 +225,28 @@ body {
     padding: 5px 10px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+    border: none; /* Hide border */
+    overflow: hidden; /* Hide scrollbar */
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
 }

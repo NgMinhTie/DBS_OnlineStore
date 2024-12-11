@@ -1,13 +1,15 @@
 const express = require('express');
-const mysql = require('mysql2')
+const mysql = require('mysql2');
+const cors = require('cors'); // Thêm dòng này
 
 const app = express();
 app.use(express.json());
-const PORT = 80;
+app.use(cors()); // Thêm dòng này
+const PORT = 100;
 const pool = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "iELTS6.5.",
+  password: "Suhao1031",
   database: "cellphone",
 });
     
@@ -36,30 +38,26 @@ app.post("/as", async(req, res) => {
 });
 
 app.post("/notknown1", async (req, res) => {
-  //* BODY REQUEST
-//   {
-//   "customerID": 2
-// }
-  //*
   try {
-    // Execute the query directly
     const { customerID } = req.body;
-    const [result] = await pool
-      .promise()
-      .query("CALL GetCustomerDetails(?)", [customerID]);
-
-    // const customerDetails = result[0]; 
-    // const phoneNumbers = result[1];
-    // const vouchers = result[2]; 
-    return res.status(200).json({
-      result
-    });
+    const [result] = await pool.promise().query("CALL GetCustomerDetails(?)", [customerID]);
+    console.log('Data sent to client:', result); // Thêm dòng này để kiểm tra dữ liệu gửi đi
+    return res.status(200).json({ result });
   } catch (err) {
     console.error("Cannot select:", err.message);
     return res.status(500).send("Cannot Select");
   }
 });
 
+app.get('/getCustomerList', async (req, res) => {
+    try {
+        const [result] = await pool.promise().query('SELECT * FROM cellphone.customer');
+        return res.status(200).json(result);
+    } catch (err) {
+        console.error('Error fetching customer list:', err.message);
+        return res.status(500).send('Error fetching customer list');
+    }
+});
 
 //!: CANNOT RUN. PLEASE DO NOT USE AS A TEST
 app.post("/notknown2", async (req, res) => {
