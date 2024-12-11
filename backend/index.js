@@ -16,12 +16,25 @@ app.listen(PORT, () => {
 });
 
 pool.connect(function (err) {
-    if (err)
-        console.log("Failed")
-    else console.log("Successful")
-})
+  if (err)
+    console.log("Failed")
+  else console.log("Successful")
+});
 
 //* PROCEDURE FOR SELECTING PROCEDURE
+app.post("/as", async(req, res) => {
+  try {
+    // Execute the query  
+    const [result] = await pool
+      .promise()
+      .query("SELECT * from Customer");
+    return res.status(200).json(result);
+    }
+  catch (err) {
+    
+  }
+});
+
 app.post("/notknown1", async (req, res) => {
   //* BODY REQUEST
 //   {
