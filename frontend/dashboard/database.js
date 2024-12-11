@@ -35,8 +35,8 @@ function searchTable(searchTerm, tableBodyId) {
 }
 
 document.getElementById('search-button').addEventListener('click', function() {
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
-    searchTable(searchTerm, 'customer-table-body');
+    const customerID = document.getElementById('search-input').value;
+    fetchCustomerDetails(customerID);
 });
 
 document.getElementById('search-button-table1').addEventListener('click', function() {
@@ -56,7 +56,7 @@ document.getElementById('search-button-table4').addEventListener('click', functi
 
 async function fetchCustomerData() {
     try {
-        const response = await fetch('https://your-server-endpoint/customers');
+        const response = await fetch('http://localhost:100/notknown1');
         const data = await response.json();
         populateCustomerTable(data);
     } catch (error) {
@@ -71,14 +71,54 @@ function populateCustomerTable(customers) {
     customers.forEach(customer => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${customer.id}</td>
-            <td>${customer.name}</td>
-            <td>${customer.address}</td>
-            <td>${customer.phone}</td>
-            <td>${customer.point}</td>
+            <td>${customer.AccountID}</td>
+            <td>${customer.FName} ${customer.MName} ${customer.LName}</td>
+            <td>${customer.Address}</td>
+            <td>${customer.PhoneNumber}</td>
+            <td>${customer.CusPoint}</td>
         `;
         tableBody.appendChild(row);
     });
+}
+
+async function fetchCustomerDetails(customerID) {
+    try {
+        const response = await fetch('https://your-server-endpoint/notknown1', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ customerID })
+        });
+        const data = await response.json();
+        console.log('Data received from server:', data); // Thêm dòng này để kiểm tra dữ liệu nhận được
+        populateCustomerDetails(data.result);
+    } catch (error) {
+        console.error('Error fetching customer details:', error);
+    }
+}
+
+function populateCustomerDetails(data) {
+    const tableBody = document.getElementById('customer-table-body');
+    tableBody.innerHTML = ''; // Clear existing content
+
+    if (data.length === 0 || data[0].length === 0) {
+        console.error('No customer details found');
+        return;
+    }
+
+    const customerDetails = data[0][0];
+    const phoneNumber = data[1][0]?.PhoneNumber || 'N/A'; // Kiểm tra nếu không có số điện thoại
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${customerDetails.AccountID}</td>
+        <td>${customerDetails.FName} ${customerDetails.MName} ${customerDetails.LName}</td>
+        <td>${customerDetails.Address}</td>
+        <td>${phoneNumber}</td>
+        <td>${customerDetails.CusPoint}</td>
+    `;
+    tableBody.appendChild(row);
 }
 
 async function fetchTable1Data() {
@@ -159,10 +199,21 @@ function populateTable4(data) {
     });
 }
 
+async function fetchCustomerList() {
+    try {
+        const response = await fetch('http://localhost:100/getCustomerList');
+        const data = await response.json();
+        populateCustomerTable(data);
+    } catch (error) {
+        console.error('Error fetching customer list:', error);
+    }
+}
+
 // Call the functions to fetch and populate data when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     fetchCustomerData();
     fetchTable1Data();
     fetchTable2Data();
     fetchTable4Data();
+    fetchCustomerList();
 });
