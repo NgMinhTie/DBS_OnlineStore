@@ -1221,12 +1221,10 @@ BEGIN
     JOIN Workfor ON Stafff.StaffID = Workfor.EMP_ID
     WHERE Bill.BillID = NEW.BillID;
 
-    -- Get the branch of the staff processing the return
     SELECT BranchID INTO staff_branch_id
     FROM Workfor
     WHERE EMP_ID = NEW.BranchID;
 
-    -- Validate that both branches match
     IF bill_branch_id IS NULL OR staff_branch_id IS NULL OR bill_branch_id != staff_branch_id THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Cannot process return or exchange. Bill and return must be handled by staff from the same branch.';
@@ -1236,11 +1234,9 @@ END$$
 DELIMITER ;
 
 
--- Indexes for Bill and Staff relationships
 CREATE INDEX idx_bill_staff ON Bill(StaffID);
 CREATE INDEX idx_staff_branch ON Workfor(BranchID, EMP_ID);
 
--- Index for Branch in ReturnExchangeStock
 CREATE INDEX idx_res_branch ON ReturnExchangeStock(BranchID);
 
 DELIMITER $$
@@ -1284,6 +1280,40 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE FUNCTION GetBestSellingProduct(
+    p_BranchID INT,           
+    p_MinPrice DECIMAL(10, 2),
+    p_MaxPrice DECIMAL(10, 2) 
+) RETURNS VARCHAR(100)        
+DETERMINISTIC
+BEGIN
+    DECLARE best_selling_product VARCHAR(100);
+    
+    SELECT DT.DeviceName
+    INTO best_selling_product
+    FROM Contain C
+    JOIN Device D ON C.deviceType = D.DeviceType
+    JOIN DeviceType DT ON D.DeviceType = DT.DeviceID
+    JOIN Bill B ON C.BillID = B.BillID
+    WHERE (p_BranchID IS NULL OR B.Cus_AccountID IN (
+        SELECT AccountID FROM Customer WHERE AccountID IN (
+            SELECT DISTINCT Customer.AccountID FROM ReturnExchangeStock WHERE BranchID = p_BranchID
+        )
+    ))
+    AND (p_MinPrice IS NULL OR D.DevicePrice >= p_MinPrice)
+    AND (p_MaxPrice IS NULL OR D.DevicePrice <= p_MaxPrice)
+    GROUP BY DT.DeviceName
+    ORDER BY SUM(C.deviceNumber) DESC
+    LIMIT 1;
+
+    RETURN best_selling_product;
+END$$
+
+DELIMITER ;
+-- SELECT GetBestSellingProduct(1, NULL, NULL);
+-- SELECT GetBestSellingProduct(NULL, 100, 500);
 
 
 DELIMITER $$
@@ -1363,40 +1393,49 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE PROCEDURE DeleteCustomer(
-    IN p_PhoneNumber VARCHAR(15)
+CREATE PROCEDURE DeleteEmployee(
+    IN p_EMP_ID VARCHAR(15)
 )
 BEGIN
-    DECLARE v_AccountID VARCHAR(15);
-    DECLARE customer_exists INT;
+    DECLARE employee_exists INT;
+    DECLARE manager_exists INT;
 
-    SELECT AccountID INTO v_AccountID
-    FROM CusNumPhone
-    WHERE PhoneNumber = p_PhoneNumber;
+    -- Step 1: Check if the employee exists in the Employee table
+    SELECT COUNT(*) INTO employee_exists
+	FROM Employee
+     WHERE EMP_ID = p_EMP_ID;
 
-    IF v_AccountID IS NULL THEN
+     IF employee_exists = 0 THEN
+         SIGNAL SQLSTATE '45000'
+         SET MESSAGE_TEXT = 'Employee does not exist in Employee table.';
+     END IF;
+    -- Step 2: Check if the employee is a manager and handle accordingly
+    SELECT COUNT(*) INTO manager_exists
+    FROM Manager
+    WHERE Manager_ID = p_EMP_ID;
+
+    IF manager_exists > 0 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Customer not exist.';
+        SET MESSAGE_TEXT = 'Cannot delete employee: Employee is a manager. Please reassign the management role first.';
     END IF;
 
-    SELECT COUNT(*) INTO customer_exists
-    FROM Customer
-    WHERE AccountID = v_AccountID;
+    DELETE FROM PhoneNumber WHERE EmployeeID = p_EMP_ID;
 
-    IF customer_exists = 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Customer not exist.';
-    ELSE
-        DELETE FROM CusNumPhone WHERE AccountID = v_AccountID;
-        
-        DELETE FROM Voucher WHERE AccountID = v_AccountID;
+    DELETE FROM Bill WHERE StaffID = p_EMP_ID;
 
-        DELETE FROM Customer WHERE AccountID = v_AccountID;
-    END IF;
+    DELETE FROM Workfor WHERE EMP_ID = p_EMP_ID;
+
+    DELETE FROM Stafff WHERE StaffID = p_EMP_ID;
+
+    DELETE FROM Employee WHERE EMP_ID = p_EMP_ID;
+
 END$$
 
 DELIMITER ;
 
+select * from Employee;
+CALL DeleteEmployee('ST10085');
+   
 
 
 
@@ -1473,10 +1512,10 @@ DELIMITER $$
 
 
 
-CALL GetCustomerDetails (2);
-CALL GetBranchSalesReport(1,10, 2002, 1, 2003);
+-- CALL GetCustomerDetails (2);
+-- CALL GetBranchSalesReport(1,10, 2002, 1, 2003);
 
-SELECT * FROM bill;
+-- SELECT * FROM bill;
 
-SELECT * FROM employee;
-SELECT * FROM stafff;
+-- SELECT * FROM employee;
+-- SELECT * FROM stafff;
