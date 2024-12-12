@@ -1,4 +1,3 @@
-
 INSERT INTO Manager (Manager_ID, BranchID)
 VALUES
 ('MN12345', 1),
