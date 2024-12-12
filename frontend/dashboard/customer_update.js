@@ -1,4 +1,7 @@
-
+//import{fetchTable1Data} from database.js
+//import { populateCustomerTable } from "./customerTable.js";
+//import { fetchCustomerData } from "./customerTable.js";
+//import { populateCustomerTable } from "./customerTable";
 document.getElementById('update-button-table3').addEventListener('click', function() {
     // Check if the modal already exists
     if (document.getElementById('customer-update-modal')) {
@@ -59,13 +62,56 @@ document.getElementById('update-button-table3').addEventListener('click', functi
         }
     }
 
+//! ADD IT INTO TABLE
+async function UpdateNewCustomer(
+          accountID,
+          NewPoints,
+          firstName,
+          middleName,
+          lastName,
+          dob,
+          gender,
+          address
+) {
+   try {
+     const response = await fetch(
+       "http://localhost:100/updateCustomerPoint",
+       {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify({
+           accountID,
+           NewPoints,
+           firstName,
+           middleName,
+           lastName,
+           dob,
+           gender,
+           address,
+         }),
+       }
+     );
+     if (response) {
+       //console.log('Insert the data successfully', response);
+         alert("Customer updated successfully");
+         fetchCustomerData();
+     } else {
+       console.log("The server does not response");
+       alert("Customer updated failed");
+     }
+   } catch (err) {
+     alert("The server does not response");
+   }
+        }
     // Handle form submission
     document.getElementById('customer-update-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
         // Collect form data
-        const accountId = document.getElementById('update-account-id').value;
-        const point = document.getElementById('update-point').value;
+        const accountID = document.getElementById('update-account-id').value;
+        const pointString = document.getElementById("update-point").value;
         const firstName = document.getElementById('update-first-name').value;
         const middleName = document.getElementById('update-middle-name').value;
         const lastName = document.getElementById('update-last-name').value;
@@ -73,6 +119,17 @@ document.getElementById('update-button-table3').addEventListener('click', functi
         const gender = document.getElementById('update-gender').value;
         const address = document.getElementById('update-address').value;
 
+        const point = parseInt(pointString);
+        UpdateNewCustomer(
+          accountID,
+          point,
+          firstName,
+          middleName,
+          lastName,
+          dob,
+          gender,
+          address
+        );
         // Check for existing ID and update
         const tableBody = document.getElementById('customer-table-body');
         const rows = tableBody.getElementsByTagName('tr');

@@ -41,14 +41,41 @@ document.getElementById('delete-button-table3').addEventListener('click', functi
             modal.style.display = 'none';
         }
     }
+async function deleteCustomer(
+  AccountID,
 
+) {
+  try {
+    const response = await fetch("http://localhost:100/deleteCustomer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        AccountID,
+      }),
+    });
+    if (response) {
+      console.log("Delete the data successfully", response);
+      alert("Customer deleted successfully");
+    } else {
+      console.log("The server does not response");
+      alert("Customer deleted failed");
+    }
+  } catch (err) {
+    alert("The server does not response");
+  }
+}
     // Handle form submission
     document.getElementById('customer-delete-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
         // Collect form data
         const accountId = document.getElementById('delete-account-id').value;
-
+        deleteCustomer(
+          accountId,
+          
+        );
         // Check for existing ID and delete
         const tableBody = document.getElementById('customer-table-body');
         const rows = tableBody.getElementsByTagName('tr');

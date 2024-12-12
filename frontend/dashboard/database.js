@@ -124,7 +124,7 @@ function populateTable1(data) {
 
 async function fetchTable2Data() {
     try {
-        const response = await fetch('http://localhost:100/notknown2', {
+        const response = await fetch('http://localhost:100/SalesReport', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
