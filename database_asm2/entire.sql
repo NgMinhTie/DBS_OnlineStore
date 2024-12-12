@@ -1174,8 +1174,9 @@ INSERT INTO GoodReceiveNote (ID, Description, ReceiveDate, BranchID) VALUES
 (28, 'Received books and magazines for sale', '2024-12-28', 28),
 (29, 'Received agricultural products for farm', '2024-12-29', 29),
 (30, 'Received cleaning materials for stock', '2024-12-30', 30);
-
-
+INSERT INTO Voucher (AccountID, expiredDate, discountValue)
+VALUES
+('CP123456789', '2025-12-31', 50.00);
 
 
 -- trigger
@@ -1315,7 +1316,7 @@ DELIMITER ;
 -- SELECT GetBestSellingProduct(1, NULL, NULL);
 -- SELECT GetBestSellingProduct(NULL, 100, 500);
 
-
+SELECT ValidatePhoneNumber("000");
 DELIMITER $$
 
 CREATE FUNCTION ValidatePhoneNumber(
@@ -1378,16 +1379,66 @@ DELIMITER $$
 
 CREATE PROCEDURE UpdateCustomerPoints(
     IN p_AccountID VARCHAR(15),
-    IN p_NewPoints INT
+    IN p_CusPoint INT,
+    IN p_FName VARCHAR(50),
+    IN p_MName VARCHAR(50),
+    IN p_LName VARCHAR(50),
+    IN p_DOB DATE,
+    IN p_Gender ENUM('Male', 'Female'),
+    IN p_Address TEXT
+    
 )
 BEGIN
     UPDATE Customer
-    SET CusPoint = p_NewPoints
+    SET CusPoint = p_CusPoint, 
+    FName = p_FName,
+    MName = p_MName,
+    LName = p_LName,
+    DOB = p_DOB,
+    Gender = p_Gender,
+    Address = p_Address
+   
     WHERE AccountID = p_AccountID;
 END$$
 
 DELIMITER ;
+-- CALL UpdateCustomerPoints("CP123456789", 1000, "A", "A", "A", "2003-12-12", "Male", "A");
 
+-- CALL AddNewCustomer("22BK2252720",1000, "Vo", "Truc", "Son", "2004-08-10", "Male", "268 Ly Thuong Kiet", "0935798280");
+
+select * from customer;
+
+DELIMITER $$
+
+CREATE PROCEDURE deleteCustomer(
+	IN p_AccountID VARCHAR(15)
+)
+BEGIN
+	DECLARE customer_exists INT;
+    
+    -- step 1: find customer
+    SELECT COUNT(*) INTO customer_exists
+    FROM Customer
+    WHERE AccountID = p_AccountID;
+    
+    IF customer_exists = 0 THEN
+         SIGNAL SQLSTATE '45000'
+         SET MESSAGE_TEXT = 'Customer does not exist in Employee table.';
+     END IF;
+     
+     -- step 2: if customer exist => delete
+     DELETE FROM contain WHERE BillID = (SELECT BillID FROM bill WHERE Cus_AccountID = p_AccountID);
+     DELETE FROM bill WHERE Cus_AccountID = p_AccountID;
+     DELETE FROM cusnumphone WHERE AccountID = p_AccountID;
+     DELETE FROM Customer WHERE AccountID = p_AccountID;
+     
+END $$
+
+DELIMETER;
+CALL deleteCustomer("CP123456789");
+-- DROP PROCEDURE IF EXISTS deleteCustomer;
+
+-- 13:04:02	CALL deleteCustomer("22BK2252720")	Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`cellphone`.`cusnumphone`, CONSTRAINT `cusnumphone_ibfk_1` FOREIGN KEY (`AccountID`) REFERENCES `customer` (`AccountID`))	0.000 sec
 
 
 
@@ -1441,7 +1492,7 @@ CALL DeleteEmployee('ST10085');
 
 DELIMITER $$
 
-CREATE PROCEDURE GetCustomerDetails(
+CREATE PROCEDURE CalculateTotalDiscount(
     IN p_AccountID VARCHAR(15)
 )
 BEGIN
@@ -1510,8 +1561,10 @@ DELIMITER ;
 
 DELIMITER $$
 
+-- 13:34:19	CALL deleteCustomer("GO678901234")	Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`cellphone`.`bill`, CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`Cus_AccountID`) REFERENCES `customer` (`AccountID`))	0.016 sec
+-- 13:39:50	CALL deleteCustomer("CP123456789")	Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`cellphone`.`contain`, CONSTRAINT `contain_ibfk_1` FOREIGN KEY (`BillID`) REFERENCES `bill` (`BillID`))	0.000 sec
 
-
+SELECT * FROM Customer;
 -- CALL GetCustomerDetails (2);
 -- CALL GetBranchSalesReport(1,10, 2002, 1, 2003);
 
@@ -1519,3 +1572,6 @@ DELIMITER $$
 
 -- SELECT * FROM employee;
 -- SELECT * FROM stafff;
+CALL GetCustomerDetails("CP234567890");
+-- 13:39:19	-- 13:34:19 CALL deleteCustomer("GO678901234") Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`cellphone`.`bill`, CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`Cus_AccountID`) REFERENCES `customer` (`AccountID`)) 0.016 sec  SELECT * FROM Customer; -- CALL GetCustomerDetails (2); -- CALL GetBranchSalesReport(1,10, 2002, 1, 2003);  -- SELECT * FROM bill;  -- SELECT * FROM employee; -- SELECT * FROM stafff;	32 row(s) returned	0.000 sec / 0.000 sec
+SELECT * FROM Customer;
